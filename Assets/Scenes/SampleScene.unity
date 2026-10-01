@@ -151,7 +151,7 @@ SurfaceEffector2D:
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Speed: 30
+  m_Speed: 15
   m_SpeedVariation: 0
   m_ForceScale: 1
   m_UseContactForce: 0
@@ -752,6 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a569e0e70e2b6a40bd40818b5e3f073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  torqueAmount: 10
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
