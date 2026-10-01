@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinishLine : MonoBehaviour
 {
@@ -8,7 +9,15 @@ public class FinishLine : MonoBehaviour
         {
             Debug.Log("Player has crossed the finish line!");
             //TODO: You can add additional logic here, such as triggering a win condition or loading a new scene.
+            Invoke(nameof(ReloadScene), 1f); // Reload the scene after 1 second
+
         }
+    }
+
+    void ReloadScene()
+    {
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 }
