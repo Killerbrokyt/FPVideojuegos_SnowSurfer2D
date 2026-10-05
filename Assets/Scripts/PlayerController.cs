@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float torqueAmount = 1f;
     [SerializeField] private float bootsSpeed = 35f;
     [SerializeField] private ParticleSystem snowEffect;
-
+    
     SurfaceEffector2D surfaceEffector2D;
 
     float baseSpeed;
@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     Vector2 moveInput;
     Rigidbody2D rb;
+    
+    private bool canControlPlayer = true; // Flag to control player input
+
+    public bool CanControlPlayer { get => canControlPlayer; set => canControlPlayer = value; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,8 +32,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!canControlPlayer) return; // If player input is disabled, exit the method
+        
         PlayerTorque();     
-        BoostPlayer();
+        BoostPlayer();        
+        
     }
 
     /// <summary>
