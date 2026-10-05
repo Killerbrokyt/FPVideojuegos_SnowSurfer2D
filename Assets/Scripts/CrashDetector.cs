@@ -3,13 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class CrashDetector : MonoBehaviour
 {
+    [SerializeField] private float crashDelay = 1f; // Delay before reloading the scene
+    [SerializeField] private ParticleSystem crashEffect;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         int layerIndex = LayerMask.NameToLayer("Floor");
         if (other.gameObject.layer == layerIndex)
         {
             Debug.Log("Player has crashed!");
-            Invoke(nameof(ReloadScene), 1f); // Reload the scene after 1 second
+            crashEffect.Play();
+            Invoke(nameof(ReloadScene), crashDelay);
         }
     }
 
