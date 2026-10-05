@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float torqueAmount = 1f;
     [SerializeField] private float bootsSpeed = 35f;
     [SerializeField] private ParticleSystem snowEffect;
+    [SerializeField] private ScoreManager scoreManager;
     
     SurfaceEffector2D surfaceEffector2D;
     Rigidbody2D rb;
@@ -59,7 +60,7 @@ public class PlayerController : MonoBehaviour
         {
             flipCount++; // Increment the flip count if the total rotation exceeds 360 degrees
             
-            Debug.Log($"Player has performed {flipCount} flips!");
+            scoreManager.AddScore(flipCount*100); 
 
             totalRotation = 0; // Reset the total rotation for the next flip            
         }
