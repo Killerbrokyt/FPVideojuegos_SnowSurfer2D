@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float torqueAmount = 1f;
-    [SerializeField] private float bootsSpeed = 35f;
+    [SerializeField] private float boostSpeed = 35f;
     [SerializeField] private ParticleSystem snowEffect;
     [SerializeField] private ScoreManager scoreManager;
     
@@ -18,9 +18,10 @@ public class PlayerController : MonoBehaviour
     float previousRotation; // Store the previous rotation of the player
     float totalRotation; // Store the total rotation of the player
     int flipCount; // Store the number of flips performed by the player
+    int activePowerUpsCount;
 
 
-    
+
     private bool canControlPlayer = true; // Flag to control player input
 
     public bool CanControlPlayer { get => canControlPlayer; set => canControlPlayer = value; }
@@ -28,6 +29,9 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        transform.GetChild(0).GetChild(PlayerPrefs.GetInt("SelectedCharacter",0))
+            .gameObject.SetActive(true);
+
         moveAction = InputSystem.actions.FindAction("Move");
         rb = GetComponent<Rigidbody2D>();
         surfaceEffector2D = FindAnyObjectByType<SurfaceEffector2D>();
@@ -92,7 +96,7 @@ public class PlayerController : MonoBehaviour
         //Surface Efector speed is increased to bootsSpeed
         if (moveInput.y > 0)
         {     
-            surfaceEffector2D.speed = bootsSpeed; 
+            surfaceEffector2D.speed = boostSpeed; 
         }
         else
         {         
@@ -120,5 +124,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ApplyPowerUp(PowerUpsScriptableObject powerUpData)
+    {
+        activePowerUpsCount++;
+        if (powerUpData.PowerUpType == "Speed")
+        {
+            baseSpeed += powerUpData.PowerUpValue;
+            boostSpeed += powerUpData.PowerUpValue;
+        }
+    }
 
+    public void DeactivatePowerUp(PowerUpsScriptableObject powerUpData)
+    {
+        activePowerUpsCount--;
+        if (activePowerUpsCount == 0)
+        {
+            if (powerUpData.PowerUpType == "Speed")
+            {
+                baseSpeed -= powerUpData.PowerUpValue;
+                boostSpeed -= powerUpData.PowerUpValue;
+            }
+        }
+    }
 }
