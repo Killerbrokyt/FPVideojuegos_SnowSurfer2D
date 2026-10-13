@@ -11,7 +11,9 @@ public class FinishLine : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Player has crossed the finish line!");
-            finishEffect.Play(); // Play the finish effect particles            
+            finishEffect.Play(); // Play the finish effect particles
+            int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel",1);
+            PlayerPrefs.
             Invoke(nameof(ReloadScene), reloadDelay); // Reload the scene after the specified delay
 
         }
@@ -20,7 +22,7 @@ public class FinishLine : MonoBehaviour
     void ReloadScene()
     {
         // Reload the current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
 }
